@@ -1,5 +1,5 @@
 {
-  "name": "21ilab/magento-update-stock-on-buy",
+  "name": "ahmed-oz/magento-update-stock-on-buy",
   "description": "Update stock data in Atelier on buy event",
   "type": "magento2-module",
   "require": {
