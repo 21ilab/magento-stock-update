@@ -1,0 +1,22 @@
+{
+  "name": "21ilab/magento-update-stock-on-buy",
+  "description": "Update stock data in Atelier on buy event",
+  "type": "magento2-module",
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Twentyone\\UpdateStock\\": ""
+    }
+  },
+  "authors": [
+    {
+      "name": "Afroze Shaik",
+      "email": "afroze.shaik.afroze@gmail.com"
+    }
+  ]
+}
