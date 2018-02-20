@@ -5,14 +5,14 @@
  * Time: 11:33 AM
  */
 
-namespace Twentyone\UpdateOnBuy\Observer;
+namespace Twentyone\UpdateStock\Observer;
 
 
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use MagentoEnv\Entity\ConfigEnv;
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 class UpdateProductObserver implements ObserverInterface
 {
@@ -25,17 +25,17 @@ class UpdateProductObserver implements ObserverInterface
      */
     private $configEnv;
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
     private $logger;
 
     /**
      * UpdateStockObserver constructor.
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      * @param ConfigEnv $configEnv
      * @param Product $product
      */
-    public function __construct(Logger $logger,
+    public function __construct(LoggerInterface $logger,
                                 ConfigEnv $configEnv,
                                 Product $product)
     {
@@ -50,8 +50,12 @@ class UpdateProductObserver implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $myEventData = $observer->getData('controller_action_catalog_product_save_entity_after');
+        $myEventData = null;
+        $myEventData = $observer->getData('product');
 
-        $this->logger->addDebug($myEventData);
+        $this->logger->debug("event", ["save"]);
+        $this->logger->debug("event", [$observer->getEventName()]);
+        $this->logger->debug("name", [$observer->getEvent()->getName()]);
+        $this->logger->debug("event",[$myEventData->getSku()]);
     }
 }
