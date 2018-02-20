@@ -55,6 +55,11 @@ class TestCommand extends Command
         $this->setHelp("This command helps to update products from atelier CSV");
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output) {
 
         $output->writeln("testing soap");

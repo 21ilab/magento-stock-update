@@ -38,7 +38,7 @@ class SoapEntity
     }
 
     /**
-     * @param float $idAtelier
+     * @param int $idAtelier
      * @param string $size
      * @return int|null
      */
@@ -56,6 +56,12 @@ class SoapEntity
         return $availability;
     }
 
+    /**
+     * @param string $email
+     * @param string $firstName
+     * @param string $lastName
+     * @return mixed|null
+     */
     public function updateClient($email, $firstName, $lastName) {
         $res = null;
         if ($this->soapClient) {
@@ -80,6 +86,18 @@ class SoapEntity
         return $res;
     }
 
+    /**
+     * @param string $email
+     * @param int $idAtelier
+     * @param string $size
+     * @param int $orderId
+     * @param string $address1
+     * @param string $address2
+     * @param string $address3
+     * @param float $price
+     * @param int $qty
+     * @return mixed|null
+     */
     public function updateOrder($email, $idAtelier, $size, $orderId, $address1, $address2, $address3, $price, $qty) {
         $string = "SALDI=SI|CAMBIO=1|ID_VALUTA=1||PREZZO_LISTINO=85|EMAIL_CLIENTE=".$email."|ID_CLINETE=".$email."|ID_ARTICOLO=".$idAtelier."|TAGLIA=".$this->getAtelierSize($size)."|CODICE=".$orderId."|DESTINAZIONE_RIGA1=".$address1."|DESTINAZIONE_RIGA2=".$address2."|DESTINAZIONE_RIGA3=".$address3."|PREZZO=".$price."|QTA=".$qty;
         $res = null;
@@ -92,6 +110,10 @@ class SoapEntity
         return $res;
     }
 
+    /**
+     * @param string $size
+     * @return string
+     */
     private function getAtelierSize($size) {
         if (is_numeric(substr($size, 0, 1)) && !is_numeric(substr($size, strlen($size)-1, 1))) {
             $preNum = substr($size, 0, strlen($size)-2);

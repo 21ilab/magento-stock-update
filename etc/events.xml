@@ -6,7 +6,4 @@
     <event name="sales_order_place_after">
         <observer name="UpdateStock" instance="Twentyone\UpdateStock\Observer\UpdateStockObserver" />
     </event>
-    <event name="controller_action_catalog_product_save_entity_after">
-        <observer name="UpdateProduct2" instance="Twentyone\UpdateStock\Observer\UpdateProductObserver" />
-    </event>
 </config>
