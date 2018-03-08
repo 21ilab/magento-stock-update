@@ -139,7 +139,7 @@ class UpdateStartObserver  implements ObserverInterface
 
         return $attributeCode;
     }
-
+    
     /**
      * @param Config $eavConfig
      * @param string $attributeCode

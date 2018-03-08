@@ -14,6 +14,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Twentyone\UpdateStock\ServiceEntity\SoapEntity;
+use Magento\Framework\Event\ObserverInterface;
 
 class TestCommand extends Command
 {
@@ -68,14 +69,35 @@ class TestCommand extends Command
             'ID_ARTICOLO' => 60542,
             'TAGLIA' => '48'
         );
+
         //'DisponibilitaVarianteTaglia', [60542, '48']
+        $output->writeln("Disponibilita Variante Taglia");
         $res = $this->soapEntity->callFunction('DisponibilitaVarianteTaglia', array($params));
-        var_dump($res->DisponibilitaVarianteTagliaResult);
-        $res = $this->soapEntity->updateClient('oriana.potente@21ilab.com', 'Oriana','Potente');
-        var_dump($res);
-        $res = $this->soapEntity->updateOrder('oriana.potente@21ilab.com', 60542,'48',123, 'Via Roma 1', '10100, Torino, TO', 'Italia', 10, 1);
-        var_dump($res);
-        //$this->logger->debug("message", ['test']);
+        $output->writeln(json_encode($res));
+
+        $output->writeln("Disponibilita Variante");
+        $res = $this->soapEntity->callFunction('DisponibilitaVariante', array($params));
+        $output->writeln(json_encode($res));
+        /*
+        $output->writeln("Update client");
+        $res = $this->soapEntity->updateClient('oriana.potente@gmail.com', 'Oriana','Potente');
+        var_dump($res->AggiornaClienteCompletaFidelityResult);
+        $output->writeln("Update order");
+        $res = $this->soapEntity->updateOrder('oriana.potente@gmail.com', 60542,'48',123, 'Via Roma 1', '10100, Torino, TO', 'Italia', 10, 1);
+        var_dump($res->SetImpegnoEstesoResult);
+
+        */
+
+        $output->writeln("Impegno Spedizone");
+        $res = $this->soapEntity->communicateShippingFare('oriana.potente@gmail.com',123, 6.2);
+        $output->writeln(json_encode($res));
+        $res = $this->soapEntity->communicateOrderStatus('oriana.potente@gmail.com', 123, 'complete');
+        $output->writeln(json_encode($res));
+        $res = $this->soapEntity->communicateOrderPayment('oriana.potente@gmail.com',123, 'paypal');
+        $output->writeln(json_encode($res));
+
+
+
         $output->writeln("testing soap end");
     }
 }

@@ -122,7 +122,153 @@ class SoapEntity
         return $size;
     }
 
-    public function communicateShippingFare() {
+    /**
+     * @param string $orderStatus
+     * @return null|int
+     */
+    private static function getAtelierStatus($orderStatus) {
+
+        $attributeAtelier = null;
+        switch ($orderStatus) {
+            case 'processing':
+                $attributeAtelier = 1;
+                break;
+            case 'fraud':
+                $attributeAtelier = 2;
+                break;
+
+            case 'pending_payment':
+                $attributeAtelier = 3;
+                break;
+
+            case 'payment_review':
+                $attributeAtelier = 4;
+                break;
+
+            case 'pending':
+                $attributeAtelier = 5;
+                break;
+
+            case 'holded':
+                $attributeAtelier = 6;
+                break;
+
+            case 'complete':
+                $attributeAtelier = 7;
+                break;
+
+            case 'closed':
+                $attributeAtelier = 8;
+                break;
+
+            case 'canceled':
+                $attributeAtelier = 9;
+                break;
+
+            case 'paypay_canceled_reversal':
+                $attributeAtelier = 10;
+                break;
+
+            case 'pending_paypal':
+                $attributeAtelier = 11;
+                break;
+
+            case 'paypal_reversed':
+                $attributeAtelier = 12;
+                break;
+
+        }
+
+        return $attributeAtelier;
+    }
+
+    /**
+     * @param string $methodPayment
+     * @return null|int
+     */
+    private static function getAtelierMethodPayment($methodPayment) {
+
+        $attributeAtelier = null;
+        switch ($methodPayment) {
+            case 'Sella':
+                $attributeAtelier = 13;
+                break;
+            case 'Paypal':
+                $attributeAtelier = 14;
+                break;
+            default:
+                $attributeAtelier = 14;
+                break;
+        }
+
+        return $attributeAtelier;
+    }
+
+    /**
+     * @param string $email
+     * @param int $orderId
+     * @param float $fare
+     * @return string
+     */
+    public function communicateShippingFare($email, $orderId, $fare) {
+
+      $res = null;
+      if ($this->soapClient) {
+          $params = [
+              'CODICE' => $orderId,
+              'EMAIL_CLIENTE' => $email,
+              'SPESE_SPEDIZIONE' => $fare
+          ];
+          $res = $this->callFunction("SetImpegnoSpeseSpedizioneEmail", [$params]);
+      }
+      return $res;
+
+    }
+
+
+    /**
+     * @param string $email
+     * @param int $orderId
+     * @param int $status
+     * @return string
+     */
+    public function communicateOrderStatus($email, $orderId, $status) {
+
+      $res = null;
+      if ($this->soapClient) {
+          $params = [
+              'CODICE' => $orderId,
+              'EMAIL_CLIENTE' => $email,
+              'ID_STATUS' => $this->getAtelierStatus($status)
+          ];
+          $res = $this->callFunction("SetImpegnoStatusEmail", [$params]);
+      }
+
+      if ($res->SetImpegnoStatusEmailResult == "ER") {
+          $res = $this->callFunction("GetStatusImpegnoEmail", [$params]);
+      }
+      return $res;
+
+    }
+
+    /**
+     * @param string $email
+     * @param int $orderId
+     * @param int $methodPayment
+     * @return string
+     */
+    public function communicateOrderPayment($email, $orderId, $methodPayment) {
+
+      $res = null;
+      if ($this->soapClient) {
+          $params = [
+              'CODICE' => $orderId,
+              'EMAIL_CLIENTE' => $email,
+              'ID_PAGAMENTO' => $this->getAtelierMethodPayment($methodPayment)
+          ];
+          $res = $this->callFunction("SetImpegnoPagamentoEmail", [$params]);
+      }
+      return $res;
 
     }
 }

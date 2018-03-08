@@ -110,6 +110,8 @@ class UpdateStockObserver implements ObserverInterface
                 $this->logger->debug("data: ".$product->getTaxAmount());
                 $this->logger->debug("data: ".$product->getRowTotal());
                 $this->logger->debug(json_encode($this->soapEntity->updateOrder($order->getCustomerEmail(), $idAtelier, $sizeAttributeValueText, $order->getRealOrderId(), $order->getShippingAddress()->getStreetLine(1), $order->getShippingAddress()->getPostcode()." ,".$order->getShippingAddress()->getCity()." ".$order->getShippingAddress()->getRegion(), $order->getShippingAddress()->getCountryId(), $product->getRowTotal(), $product->getQtyOrdered())));
+                $this->logger->debug($this->soapEntity->communicateShippingFare($order->getCustomerEmail(), $order->getRealOrderId(), $order->getShippingAmount()));
+                $this->logger->debug($this->soapEntity->communicateOrderStatus($order->getCustomerEmail(), $order->getRealOrderId(), $order->getState()));
                 //after update do shipping and payment calls with service entity
             }
         }
