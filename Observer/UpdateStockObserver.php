@@ -85,6 +85,7 @@ class UpdateStockObserver implements ObserverInterface
         $this->logger->debug("data: ".$order->getTotalPaid());
         $this->logger->debug("data: ".$order->getDiscountAmount());
         $this->logger->debug("data: ".$order->getPaymentAuthorizationAmount());
+        $this->logger->debug("data: ".$order->getPayment());
         foreach ($order->getItems() as $product) {
             if (strtolower($product->getProductType()) == 'simple') {
                 $pr = clone $this->productModel;
@@ -112,6 +113,7 @@ class UpdateStockObserver implements ObserverInterface
                 $this->logger->debug(json_encode($this->soapEntity->updateOrder($order->getCustomerEmail(), $idAtelier, $sizeAttributeValueText, $order->getRealOrderId(), $order->getShippingAddress()->getStreetLine(1), $order->getShippingAddress()->getPostcode()." ,".$order->getShippingAddress()->getCity()." ".$order->getShippingAddress()->getRegion(), $order->getShippingAddress()->getCountryId(), $product->getRowTotal(), $product->getQtyOrdered())));
                 $this->logger->debug($this->soapEntity->communicateShippingFare($order->getCustomerEmail(), $order->getRealOrderId(), $order->getShippingAmount()));
                 $this->logger->debug($this->soapEntity->communicateOrderStatus($order->getCustomerEmail(), $order->getRealOrderId(), $order->getState()));
+                $this->logger->debug($this->soapEntity->communicateOrderPayment($order->getCustomerEmail(), $order->getRealOrderId(), $order->getPayment()->getMethod()));
                 //after update do shipping and payment calls with service entity
             }
         }

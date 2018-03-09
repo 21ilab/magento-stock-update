@@ -131,50 +131,50 @@ class SoapEntity
         $attributeAtelier = null;
         switch ($orderStatus) {
             case 'processing':
-                $attributeAtelier = 1;
+                $attributeAtelier = 30000001;
                 break;
             case 'fraud':
-                $attributeAtelier = 2;
+                $attributeAtelier = 30000004;
                 break;
 
             case 'pending_payment':
-                $attributeAtelier = 3;
+                $attributeAtelier = 30000002;
                 break;
 
             case 'payment_review':
-                $attributeAtelier = 4;
+                $attributeAtelier = 30000002;
                 break;
 
             case 'pending':
-                $attributeAtelier = 5;
+                $attributeAtelier = 30000002;
                 break;
 
             case 'holded':
-                $attributeAtelier = 6;
+                $attributeAtelier = 30000004;
                 break;
 
             case 'complete':
-                $attributeAtelier = 7;
+                $attributeAtelier = 30000005;
                 break;
 
             case 'closed':
-                $attributeAtelier = 8;
+                $attributeAtelier = 30000004;
                 break;
 
             case 'canceled':
-                $attributeAtelier = 9;
+                $attributeAtelier = 30000004;
                 break;
 
             case 'paypay_canceled_reversal':
-                $attributeAtelier = 10;
+                $attributeAtelier = 30000004;
                 break;
 
             case 'pending_paypal':
-                $attributeAtelier = 11;
+                $attributeAtelier = 30000002;
                 break;
 
             case 'paypal_reversed':
-                $attributeAtelier = 12;
+                $attributeAtelier = 30000004;
                 break;
 
         }
